@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 {% block head %}
 <title>Détails de la Parcelle</title>
@@ -8,9 +9,7 @@
         gap: 20px;
         padding: 20px;
     }
-    .left-section {
-        flex: 1;
-    }
+    .left-section { flex: 1; }
     .right-section {
         flex: 1;
         background: #f9f9f9;
@@ -22,16 +21,10 @@
         height: 67vh;
         width: 90%;
         border-radius: 8px;
-        padding:20px;
+        padding: 20px;
     }
-    form {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap:2px;
-    }
-    form label {
-        font-weight: bold;
-    }
+    form { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    form label { font-weight: bold; }
     input {
         padding: 5px;
         border: 1px solid #ccc;
@@ -39,65 +32,59 @@
         width: 100%;
     }
     .table-container {
-        
         margin-top: 20px;
         padding: 15px;
         background: #fff;
         border-radius: 8px;
         box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
         margin: 2rem;
-        right: 10rem;
-        
     }
-    table {
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background: #f2f2f2; }
+    
+    /* Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
         width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
     }
-    th, td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
+    .modal-content {
+        background-color: #fff;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%;
+        border-radius: 8px;
     }
-    th {
-        background: #f2f2f2;
+    .close {
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
     }
-
-    /*.table-container{
-        position: relative;
-        left: 3.7rem;
-        margin-left: 3.7rem;
-    }
-*/
 </style>
 {% endblock %}
 
 {% block contenu %}
-
 <div class="container">
-    <div class="left-section">
-        
-        <div id="map"></div>
-    </div>
+    <div class="left-section"><div id="map"></div></div>
     <div class="right-section">
         <h2>Informations Générales</h2>
         <form>
-            <label>Numéro dossier :</label>
-            <input type="text" value="{{ parcelle.num_dossie }}" readonly>
-            <label>Province :</label>
-            <input type="text" value="{{ parcelle.province }}" readonly>
-            <label>Commune :</label>
-            <input type="text" value="{{ parcelle.commune }}" readonly>
-            <label>Cercle :</label>
-            <input type="text" value="{{ parcelle.cercle }}" readonly>
-            <label>Douar :</label>
-            <input type="text" value="{{ parcelle.douar }}" readonly>
-            <label>Consistance :</label>
-            <input type="text" value="{{ parcelle.consistanc }}" readonly>
-            <label>Status :</label>
-            <input type="text" value="{{ parcelle.status }}" readonly>
-            <label>Nombre de façades :</label>
-            <input type="text" value="{{ parcelle.nb_de_faca }}" readonly>
+            <label>Numéro dossier :</label> <input type="text" value="{{ parcelle.num_dossie }}" readonly>
+            <label>Province :</label> <input type="text" value="{{ parcelle.province }}" readonly>
+            <label>Commune :</label> <input type="text" value="{{ parcelle.commune }}" readonly>
+            <label>Cercle :</label> <input type="text" value="{{ parcelle.cercle }}" readonly>
+            <label>Douar :</label> <input type="text" value="{{ parcelle.douar }}" readonly>
+            <label>Consistance :</label> <input type="text" value="{{ parcelle.consistanc }}" readonly>
+            <label>Status :</label> <input type="text" value="{{ parcelle.status }}" readonly>
+            <label>Nombre de façades :</label> <input type="text" value="{{ parcelle.nb_de_faca }}" readonly>
         </form>
     </div>
 </div>
@@ -116,16 +103,35 @@
     <p>Aucun propriétaire trouvé pour cette parcelle.</p>
     {% endif %}
     
-    <a href="{% url 'sigweb:modifier_proprietaire' parcelle.id %}">Modifier / Ajouter un propriétaire</a>
+    <button class="col-2" id="openModal">Modifier / Ajouter un propriétaire</button>
 </div>
 
-<div class="table-container">
-    <h2>Fichiers Associés</h2>
-    <p>Plan en DWG: <a href="{{ parcelle.fchier_dwg }}" target="_blank">Télécharger</a> | <a href="{% url 'sigweb:modifier_fichier' parcelle.id %}">Importer</a></p>
-    <p>Plan en PDF: <a href="{{ parcelle.fchier_pdf }}" target="_blank">Télécharger</a> | <a href="{% url 'sigweb:modifier_fichier' parcelle.id %}">Importer</a></p>
+<!-- Modal -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Modifier / Ajouter un Propriétaire</h2>
+        <form method="post" action="{% url 'sigweb:modifier_proprietaire' parcelle.id %}">
+            {% csrf_token %}
+            <label>Nom :</label> <input type="text" name="nom" value="{{ proprietaire.nom|default:'' }}">
+            <label>Prénom :</label> <input type="text" name="prenom" value="{{ proprietaire.prenom|default:'' }}">
+            <label>CIN :</label> <input type="text" name="CIN" value="{{ proprietaire.CIN|default:'' }}">
+            <label>Téléphone :</label> <input type="text" name="telephone" value="{{ proprietaire.telephone|default:'' }}">
+            <label>Document :</label> <input type="file" name="document">
+            <button type="submit">Enregistrer</button>
+        </form>
+    </div>
 </div>
 
 <script>
+    var modal = document.getElementById("myModal");
+    var btn = document.getElementById("openModal");
+    var span = document.getElementsByClassName("close")[0];
+
+    btn.onclick = function() { modal.style.display = "block"; }
+    span.onclick = function() { modal.style.display = "none"; }
+    window.onclick = function(event) { if (event.target == modal) { modal.style.display = "none"; } }
+
     var map = L.map('map').setView([30.57, -9.07], 6);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'

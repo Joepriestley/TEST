@@ -12,6 +12,8 @@ import os
 from .forms import ProprietaireForm, ParcelleForm
 from django.template.loader import render_to_string
 
+
+
 class ParcelleList(generics.ListCreateAPIView):
     queryset= Parcelle.objects.all()
     serializer_class =ParcelleSerializer
@@ -84,8 +86,6 @@ def download_proprietaire(request, parcelle_id, filename):
 
 
 
-
-"""
 def modifier_proprietaire(request, parcelle_id):
     parcelle = get_object_or_404(Parcelle, id=parcelle_id)
     
@@ -103,7 +103,7 @@ def modifier_proprietaire(request, parcelle_id):
 
     return render(request, 'sigweb/modifier_proprietaire.html', {'form': form, 'parcelle': parcelle})
     
-"""
+
 
 def modifier_des_fichier_DWG(request, parcelle_id):
     parcelle = get_object_or_404(Parcelle, id=parcelle_id)
@@ -121,27 +121,48 @@ def modifier_des_fichier_DWG(request, parcelle_id):
 
 
 
+# def modifier_proprietaire(request, parcelle_id):
+#     parcelle = get_object_or_404(Parcelle, id=parcelle_id)
+#     proprietaire = parcelle.proprietaires.first() if hasattr(parcelle, 'proprietaires') else None
 
-def modifier_proprietaire(request, parcelle_id):
-    parcelle = get_object_or_404(Parcelle, id=parcelle_id)
-    proprietaire = parcelle.proprietaires.first() if hasattr(parcelle, 'proprietaires') else None
-
-    if request.method == "POST":
-        form = ProprietaireForm(request.POST, request.FILES, instance=proprietaire)
-        if form.is_valid():
-            proprietaire = form.save(commit=False)
-            proprietaire.parcelle = parcelle  # Associer le propriétaire à la parcelle
-            proprietaire.save()
-            print("✅ Propriétaire enregistré avec succès !")  # Message de débogage
-            return JsonResponse({"success": True})
-        else:
-            print("❌ Erreur de validation :", form.errors)  # Afficher les erreurs de validation
+#     if request.method == "POST":
+#         form = ProprietaireForm(request.POST, request.FILES, instance=proprietaire)
+#         if form.is_valid():
+#             proprietaire = form.save(commit=False)
+#             proprietaire.parcelle = parcelle  # Associer le propriétaire à la parcelle
+#             proprietaire.save()
+#             print("✅ Propriétaire enregistré avec succès !")  # Message de débogage
+#             return JsonResponse({"success": True})
+#         else:
+#             print("❌ Erreur de validation :", form.errors)  # Afficher les erreurs de validation
     
-    else:
-        form = ProprietaireForm(instance=proprietaire)
+#     else:
+#         form = ProprietaireForm(instance=proprietaire)
 
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        html = render_to_string('sigweb/modifier_proprietaire.html', {'form': form, 'parcelle': parcelle}, request)
-        return JsonResponse({"html": html})
+#     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+#         html = render_to_string('sigweb/modifier_proprietaire.html', {'form': form, 'parcelle': parcelle}, request)
+#         return JsonResponse({"html": html})
 
-    return render(request, 'sigweb/modifier_proprietaire.html', {'form': form, 'parcelle': parcelle})
+#     return render(request, 'sigweb/modifier_proprietaire.html', {'form': form, 'parcelle': parcelle})
+
+
+
+
+
+# def modifier_proprietaire(request, parcelle_id):
+#     parcelle = get_object_or_404(Parcelle, id=parcelle_id)
+#     proprietaire = parcelle.proprietaires.first() if hasattr(parcelle, 'proprietaires') else None
+
+#     if request.method == "POST":
+#         form = ProprietaireForm(request.POST, request.FILES, instance=proprietaire)
+#         if form.is_valid():
+#             proprietaire = form.save(commit=False)
+#             proprietaire.parcelle = parcelle  # Associer à la parcelle
+#             proprietaire.save()
+#             return JsonResponse({"success": True})  # Return success for AJAX
+#         else:
+#             return JsonResponse({"success": False, "errors": form.errors})
+
+#     else:
+#         form = ProprietaireForm(instance=proprietaire)
+#         return render(request, "sigweb/modifier_proprietaire_form.html", {"form": form, "parcelle": parcelle})
