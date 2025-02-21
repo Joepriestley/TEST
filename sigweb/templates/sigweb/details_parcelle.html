@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Détails de la Parcelle</title>
+<style>
+    .container {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 20px;
+    }
+    .left-section {
+        flex: 1;
+    }
+    .right-section {
+        flex: 1;
+        background: #f9f9f9;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+    #map {
+        height: 67vh;
+        width: 90%;
+        border-radius: 8px;
+        padding:20px;
+    }
+    form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap:2px;
+    }
+    form label {
+        font-weight: bold;
+    }
+    input {
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+    }
+    .table-container {
+        
+        margin-top: 20px;
+        padding: 15px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+        margin: 2rem;
+        right: 10rem;
+        
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background: #f2f2f2;
+    }
+
+    /*.table-container{
+        position: relative;
+        left: 3.7rem;
+        margin-left: 3.7rem;
+    }
+*/
+</style>
+{% endblock %}
+
+{% block contenu %}
+
+<div class="container">
+    <div class="left-section">
+        
+        <div id="map"></div>
+    </div>
+    <div class="right-section">
+        <h2>Informations Générales</h2>
+        <form>
+            <label>Numéro dossier :</label>
+            <input type="text" value="{{ parcelle.num_dossie }}" readonly>
+            <label>Province :</label>
+            <input type="text" value="{{ parcelle.province }}" readonly>
+            <label>Commune :</label>
+            <input type="text" value="{{ parcelle.commune }}" readonly>
+            <label>Cercle :</label>
+            <input type="text" value="{{ parcelle.cercle }}" readonly>
+            <label>Douar :</label>
+            <input type="text" value="{{ parcelle.douar }}" readonly>
+            <label>Consistance :</label>
+            <input type="text" value="{{ parcelle.consistanc }}" readonly>
+            <label>Status :</label>
+            <input type="text" value="{{ parcelle.status }}" readonly>
+            <label>Nombre de façades :</label>
+            <input type="text" value="{{ parcelle.nb_de_faca }}" readonly>
+        </form>
+    </div>
+</div>
+
+<div class="table-container">
+    <h2>Informations sur le Propriétaire</h2>
+    {% if proprietaire %}
+    <table>
+        <tr><th>Nom</th><td>{{ proprietaire.nom }}</td></tr>
+        <tr><th>Prénom</th><td>{{ proprietaire.prenom }}</td></tr>
+        <tr><th>CIN</th><td>{{ proprietaire.CIN }}</td></tr>
+        <tr><th>Téléphone</th><td>{{ proprietaire.telephone }}</td></tr>
+        <tr><th>Document</th><td><a href="{{ proprietaire.document }}" target="_blank">Télécharger</a></td></tr>
+    </table>
+    {% else %}
+    <p>Aucun propriétaire trouvé pour cette parcelle.</p>
+    {% endif %}
+    
+    <a href="{% url 'sigweb:modifier_proprietaire' parcelle.id %}">Modifier / Ajouter un propriétaire</a>
+</div>
+
+<div class="table-container">
+    <h2>Fichiers Associés</h2>
+    <p>Plan en DWG: <a href="{{ parcelle.fchier_dwg }}" target="_blank">Télécharger</a> | <a href="{% url 'sigweb:modifier_fichier' parcelle.id %}">Importer</a></p>
+    <p>Plan en PDF: <a href="{{ parcelle.fchier_pdf }}" target="_blank">Télécharger</a> | <a href="{% url 'sigweb:modifier_fichier' parcelle.id %}">Importer</a></p>
+</div>
+
+<script>
+    var map = L.map('map').setView([30.57, -9.07], 6);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+    
+    fetch("{% url 'sigweb:parcelle-Details' parcelle.id %}")
+    .then(response => response.json())
+    .then(data => {
+        var parcelleLayer = L.geoJSON(data, { style: { color: "red", weight: 2 } }).addTo(map);
+        map.fitBounds(parcelleLayer.getBounds());
+    })
+    .catch(error => console.error('Erreur de chargement du GeoJSON:', error));
+</script>
+{% endblock %}

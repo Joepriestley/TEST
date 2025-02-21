@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<!-- leaflet cdn css -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- cnd font-awesome css-->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
+  
+<!-- leaflet ruler css -->
+<link rel="stylesheet" href="{% static 'sigweb/lib/leaflet-ruler-master/src/leaflet-ruler.css' %}">
+<!-- easybutton css-->
+<link rel="stylesheet" href="{% static 'sigweb/lib/Leaflet.EasyButton-master/src/easy-button.css' %}">
+<!-- leaflet fullscreen css -->
+<link rel="stylesheet" href="{% static 'sigweb/lib/leaflet.fullscreen-master/Control.FullScreen.css' %}">
+ <!-- leaflet pan control -->
+<link rel="stylesheet" href="{% static 'sigweb/lib/Leaflet.Pancontrol-master/src/L.Control.Pan.css' %}">
+<!-- custom style css -->
+<link rel="stylesheet" href="{% static 'sigweb/css/map_styles.css' %}">
+     
+{% endblock head%}
+
+{% block contenu %}
+   
+    <button class="toggle-btn" onclick="toggleSidebar()" aria-label="Toggle Sidebar">☰</button>
+    <div class="sidebar" id="sidebar">
+        <h3>GLOBETUDES</h3>
+        
+        <h3>Filtrer les Parcelles</h3>
+    <!-- Menu déroulant pour les province-->
+    <label for="province">Province :</label>
+    <select id="province">
+        <option value="">--Sélectionner une province--</option>
+    </select>
+    <!-- Menu déroulant pour les communes-->
+    <label for="commune">Commune :</label>
+    <select id="commune">
+        <option value="">--Sélectionner une commune--</option>
+    </select>
+    <!-- Menu déroulant pour les douars-->
+    <label for="douar">Douar :</label>
+    <select id="douar">
+        <option value="">--Sélectionner un douar--</option>
+    </select>
+     <!-- Menu déroulant pour les cercles-->
+     <label for="cercle">Cercle :</label>
+     <select id="cercle">
+         <option value="">--Sélectionner une cercle--</option>
+     </select>
+     <!-- Menu déroulant pour la status -->
+    <label for="status">Status:</label>
+    <select id="status">
+        <option value="">--Sélectionner un status--</opt>
+    </select>
+    <!-- Menu déroulant pour la consistance -->
+    <label for="consistance">Consistance :</label>
+    <select id="consistance">
+        <option value="">--Sélectionner une consistance--</option>
+    </select>
+    
+
+      <!-- Menu déroulant pour le numéro de parcelle -->
+      <label for="numParcelle">Numéro du dossier :</label>
+      <select id="numParcelle">
+          <option value="">--Sélectionner le numéro du dossier--</option>
+      </select>
+      
+
+    <button onclick="filtrerParcelles()">Filtrer</button>
+
+    <!-- Liste des parcelles -->
+    <h4>Liste des Parcelles</h4>
+    <ul id="parcellesList"></ul>
+    </div>
+    
+
+     <div id="map">
+        
+     </div>
+
+    <div id="coordinates"></div>
+   <div id="static-container" data-static-url="{% static '' %}"></div>
+    
+    <!--shortcut for creating multiple headin "h${heading $}*2"
+  <h1>heading 1</h1>
+  <h2>heading 2</h2>--> 
+
+
+   <!-- leaflet js cdn -->
+   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+   <!-- jquery cdn  -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <!-- turf js cdn  -->
+  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js"></script>
+  <!-- leaflet rulet js -->
+  <script  src="{% static 'sigweb/lib/leaflet-ruler-master/src/leaflet-ruler.js' %}"></script>
+<!-- easybutton js -->
+  <script  src="{% static 'sigweb/lib/Leaflet.EasyButton-master/src/easy-button.js' %}" ></script>
+  <!-- leaflet fullscreen js -->
+  <script  src="{% static 'sigweb/lib/leaflet.fullscreen-master/Control.FullScreen.js' %}"></script>
+  <!-- leaflet pan js -->
+  <script  src="{% static 'sigweb/lib/Leaflet.Pancontrol-master/src/L.Control.Pan.js' %}"></script>
+  
+  
+  <!-- custom js -->
+  <script  src="{% static 'sigweb/javaScript/main.js' %}" ></script>
+ 
+  {% endblock contenu %} 
+
+

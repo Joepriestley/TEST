@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Liste des Parcelles</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+    input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    button {
+        margin: 10px 0;
+        padding: 8px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+</style> 
+ {% endblock %}
+
+ {% block contenu %}
+
+    
+ <button onclick="exportToExcel()">Exporter en Excel</button>
+
+ <table id="parcellesTable">
+     <thead>
+         <tr>
+             <th>Numéro dossier</th>
+             <th>Province</th>
+             <th>Commune</th>
+             <th>Douar</th>
+             <th>Cercle</th>
+             <th>Status</th>
+             <th>Consistance</th>
+             <th>Nombre de façades</th>
+             <th>DWG</th>
+             <th>PDF</th>
+         </tr>
+         <tr class="filter-row">
+             <th><input type="text" onkeyup="filterTable(0)" placeholder="Filtrer..." /></th>
+             <th><input type="text" onkeyup="filterTable(1)" placeholder="Filtrer..." /></th>
+             <th><input type="text" onkeyup="filterTable(2)" placeholder="Filtrer..." /></th>
+             <th><input type="text" onkeyup="filterTable(3)" placeholder="Filtrer..." /></th>
+             <th><input type="text" onkeyup="filterTable(4)" placeholder="Filtrer..." /></th>
+             <th><input type="text" onkeyup="filterTable(5)" placeholder="Filtrer..." /></th>
+             <th><input type="text" onkeyup="filterTable(6)" placeholder="Filtrer..." /></th>
+             <th><input type="text" onkeyup="filterTable(7)" placeholder="Filtrer..." /></th>
+             <th></th>
+             <th></th>
+         </tr>
+     </thead>
+     <tbody>
+         {% for parcelle in parcelles %}
+         <tr>
+             <td><a href="{% url 'sigweb:details_parcelle' parcelle.id %}">{{ parcelle.num_dossie }}</a></td>
+             <td>{{ parcelle.province }}</td>
+             <td>{{ parcelle.commune }}</td>
+             <td>{{ parcelle.douar }}</td>
+             <td>{{ parcelle.cercle }}</td>
+             <td>{{ parcelle.status }}</td>
+             <td>{{ parcelle.consistance }}</td>
+             <td>{{ parcelle.nb_de_faca }}</td>
+             <td><a href="{{ parcelle.fchier_dwg }}" target="_blank">Télécharger</a></td>
+             <td><a href="{{ parcelle.fchier_pdf }}" target="_blank">Télécharger</a></td>
+         </tr>
+         {% endfor %}
+     </tbody>
+ </table>
+
+ <script>
+     function filterTable(columnIndex) {
+         var input, filter, table, tr, td, i, txtValue;
+         input = document.querySelectorAll("thead input")[columnIndex];
+         filter = input.value.toUpperCase();
+         table = document.getElementById("parcellesTable");
+         tr = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+         for (i = 0; i < tr.length; i++) {
+             td = tr[i].getElementsByTagName("td")[columnIndex];
+             if (td) {
+                 txtValue = td.textContent || td.innerText;
+                 tr[i].style.display = txtValue.toUpperCase().includes(filter) ? "" : "none";
+             }
+         }
+     }
+
+     function exportToExcel() {
+         var table = document.getElementById("parcellesTable");
+         var wb = XLSX.utils.book_new();
+         
+         // Récupérer uniquement les lignes visibles du tableau (sans la ligne de filtrage)
+         var headerRow = table.getElementsByTagName("thead")[0].getElementsByTagName("tr")[0]; // Première ligne du thead
+         var tbodyRows = Array.from(table.getElementsByTagName("tbody")[0].getElementsByTagName("tr"))
+                             .filter(row => row.style.display !== "none"); // Filtrer les lignes masquées
+
+         // Créer un tableau de données à exporter
+         var data = [Array.from(headerRow.children).map(th => th.innerText)]; // Ajouter l'en-tête
+         tbodyRows.forEach(row => {
+             var rowData = Array.from(row.children).map(td => {
+                 // Supprimer les liens pour garder uniquement le texte
+                 return td.innerText.trim();
+             });
+             data.push(rowData);
+         });
+
+         var ws = XLSX.utils.aoa_to_sheet(data);
+         XLSX.utils.book_append_sheet(wb, ws, "Parcelles");
+         XLSX.writeFile(wb, "Liste_Parcelles.xlsx");
+     }
+ </script>
+ {% endblock %}
+

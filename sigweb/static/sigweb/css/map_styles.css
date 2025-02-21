@@ -1,0 +1,242 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* Carte */
+#map {
+    width: 100%;
+    height: 92vh;
+    
+
+}
+
+/* Sidebar styling */
+.sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 300px;
+    height: 78vh;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 15px;
+    border-top: 2px solid #ccc;
+    transition: transform 0.3s ease-in-out;
+    transform: translateY(100%);
+    z-index: 1000;
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+}
+
+.sidebar.open {
+    transform: translateY(0);
+}
+
+.sidebar h3 {
+    margin-top: 0;
+    font-size: 1.2em;
+    color: #007BFF;
+    font-weight: 600;
+}
+
+/* Button styling */
+.toggle-btn {
+    position: fixed;
+    top: 6rem;
+    left: 12px;
+    background: #e0e0e0;
+    color: rgb(16, 13, 13);
+    border: none;
+    padding: 4px 4px;
+    cursor: pointer;
+    border-radius: 3px;
+    width: 30px !important;
+    z-index: 1100;
+    font-size: 20px;
+}
+
+.toggle-btn:hover {
+    background-color: #b4b1ae;
+}
+
+/* Form elements */
+label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+/* Parcelles List */
+h4 {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+ul#parcellesList {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+ul#parcellesList li {
+    margin-bottom: 8px;
+    padding: 10px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+ul#parcellesList li:hover {
+    background-color: #e9ecef;
+}
+
+/* Small devices */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 250px;
+    }
+    .toggle-btn {
+        font-size: 18px;
+    }
+}
+
+/* Large devices */
+@media (min-width: 1024px) {
+    .sidebar {
+        width: 350px;
+    }
+}
+
+/* .leaflet-control{
+    bottom:3rem;
+}
+*/
+
+#coordinates{
+position: absolute;
+bottom: 5px;
+z-index: 1000;
+right: 45%;
+background: rgba(214, 213, 213, 0.5);
+border-radius:15px;
+font-size: 350;
+font-weight: 300;
+font-family:  Arial, sans-serif;
+padding:7px;
+
+}
+.leaflet-bar a{
+top:6px;
+}
+
+/* .leaflet-bar{
+bottom:4rem;
+
+} */
+.leaflet-control-scale-line {
+position: relative;
+left :5px;
+bottom:1.5rem;
+}
+
+.layer-option{
+display: flex;
+align-items: center;
+gap: 8px;
+font-size: 14px;
+white-space:nowrap;
+}
+.layer-icon {
+width: 90px;  /* Adjust image size */
+height: 40px;
+object-fit: cover;
+}
+.leaflet-control-layers-base {
+display: grid !important;
+/*grid-template-columns: 1fr 1fr; /* Two-column layout */
+/* gap: 5px;
+*/
+}
+
+.leaflet-touch .leaflet-control-pan a{
+bottom: 1rem;
+height:15px;
+width:15px;
+border-radius: 50%;
+outline: none;
+}
+
+.leaflet-ruler {
+position: relative;
+top: 0.08rem;
+right:1.6rem;
+width: 30px;
+height: 30px;
+border-radius: 14%;
+}
+.leaflet-control-zoom {
+    position: relative;
+    right: 24px;
+    top: 0.15px;
+   
+
+}
+/* home button  */
+.leaflet-touch .leaflet-bar button {
+    width: 29px;
+    height: 25px;
+    line-height: 13px;
+}
+
+.leaflet-control-fullscreen-button {
+background-size: cover !important;
+width: 36px !important;
+height: 36px !important;
+} 
+
+ .leaflet-control-zoom  leaflet-control{
+    top: 1rem;
+}
+
+
+.leaflet-touch .leaflet-control-pan a {
+    position:absolute;
+    left:5px;
+    top: 11px;
+    display: block !important;
+}
+.leaflet-control-layers{
+    top: 0.4rem;
+    right:0.5rem;
+    display: block !important;
+} 
+
+   
+
