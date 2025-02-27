@@ -50,6 +50,9 @@
     
         };
         
+        var videoUrl = 'https://www.mapbox.com/bites/00188/patricia_nasa.webm',
+        videoBounds = [[ 30.57,-9.07], [  31.57,-7.07]];
+        L.videoOverlay(videoUrl, videoBounds ).addTo(map);
 
         let overLays={
            // "Parcell":parcellesLayer,

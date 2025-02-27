@@ -9,4 +9,12 @@ class ProprietaireForm(forms.ModelForm):
 class ParcelleForm(forms.ModelForm):
     class Meta:
         model = Parcelle
-        fields = ['fchier_dwg', 'fchier_pdf']  # Ajoute les champs nécessaires
+        fields = ['fchier_dwg',]  # Ajoute les champs nécessaires  
+        
+        
+        
+class ParcellePDFForm(forms.ModelForm):
+    class Meta:
+        model = Parcelle
+        fields = ['fchier_pdf']
+        

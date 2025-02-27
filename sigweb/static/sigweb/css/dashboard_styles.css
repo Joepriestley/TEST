@@ -1,0 +1,367 @@
+/* Reset and Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Container */
+.container {
+    height: 80vh;
+}
+
+/* User Avatar */
+.user {
+    position: relative;
+    width: 50px;
+    height: 50px;
+}
+
+.user img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #3949a1;
+}
+
+/* Topbar */
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 2fr 10fr 0.4fr 1fr;
+    align-items: center;
+    z-index: 1000;
+}
+
+.logo img {
+    width: 45px;
+    height: 45px;
+    margin-left: 20px;
+    background-color: #7a2a2a;
+}
+
+/* Search Bar */
+.search {
+    position: relative;
+    justify-self: center;
+    width: 60%;
+}
+
+.search input {
+    width: 100%;
+    height: 40px;
+    padding: 0 40px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    outline: none;
+}
+
+.search i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 260px;
+    height: calc(100vh - 60px);
+    background-color:rgb(55, 3, 28) ;
+    overflow-x: hidden;
+    transition: width 0.3s ease;
+}
+
+.sidebar ul {
+    margin-top: 20px;
+}
+
+.sidebar ul li {
+    width: 100%;
+    list-style: none;
+}
+
+.sidebar ul li:hover {
+    background: #fff;
+}
+
+.sidebar ul li a {
+    width: 100%;
+    text-decoration: none;
+    color: #fff;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    transition: all 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    color: #a1396b;
+}
+
+.sidebar ul li a i {
+    min-width: 60px;
+    font-size: 24px;
+    text-align: center;
+}
+
+/* Main Content */
+.main {
+    position: absolute;
+    top: 60px;
+    left: 260px;
+    width: calc(100% - 260px);
+    min-height: calc(100vh - 60px);
+    background-color: #f5f5f5;
+    padding: 20px;
+    transition: left 0.3s ease;
+    overflow-y: auto;  /* Allow vertical scrolling for the main content */
+    text-decoration: none;
+}
+
+
+/* Cards */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 15px;
+    text-decoration: none;
+}
+
+.card {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+    transition: all 0.3s ease;
+  
+}
+
+.card:hover {
+    background: #7e5a6d;
+}
+
+.card:hover .number,
+.card:hover .card-name,
+.card:hover .icon-box {
+    color: #fff;
+}
+
+.number {
+    font-size: 35px;
+    font-weight: 500;
+    color: #b75c7f;
+    text-decoration:none;
+}
+
+.card-name {
+    text-decoration:none !important;
+    color: #888;
+    font-weight: 500;
+    
+}
+
+.icon-box img {
+    width: 50px;
+    height: 50px;
+}
+
+.chartType{
+    margin-bottom: 15px;
+}
+.chartType button{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #7a1e3b;
+    color: #fff;
+    font-size: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.chartType button:hover {
+    background-color: #7d2e46;
+}
+/* Charts */
+/* 
+.charts{
+    width: 80%;
+    max-width: 800px;
+    margin: auto;
+} */
+
+#itemDetails{
+    position:relative;
+    background-color: rgba(71, 3, 20, 0.954)!important; 
+    color: white;
+    top: -5rem;
+    left: 59%; 
+    width: 15%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+#itemDetails:hover{
+    background-color: rgba(84, 7, 38, 0.954)!important; 
+    color: white;
+    cursor: pointer;
+}
+
+.chart {
+    position: relative;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 30px !important;
+    width: 40%; /* Ensure the chart container takes full width */
+    max-width: 100%; /* Prevent overflow */
+    margin: 21px 2px 20px 20px;
+    left: 47rem;
+    bottom: 20rem;
+
+}
+
+
+#lineChart {
+    width: 100% !important; /* Ensure the chart takes full width */
+    height: 300px !important; /* Set a fixed height for the chart */
+    max-width: 100%; /* Prevent overflow */
+}
+
+.chart h2 h3 {
+    margin-bottom: 10px;
+    font-size: 1px;
+    color: #333;
+    text-align: center;
+}
+
+#graphtitle{
+    text-align: center;
+    font-size: 15px;
+    color: #0b7242;
+    margin-bottom: 20px;
+}
+
+/* User Profile Dropdown */
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.profile-dropdown .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+.profile-dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-width: 160px;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.profile-dropdown .dropdown-content a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.profile-dropdown .dropdown-content a i {
+    margin-right: 10px;
+    color: #3949a1;
+}
+
+.profile-dropdown .dropdown-content a:hover {
+    background-color: #f5f5f5;
+}
+
+.profile-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* User Avatar */
+.user img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Responsiveness */
+@media (max-width: 1115px) {
+    .sidebar {
+        width: 60px;
+    }
+
+    .main {
+        left: 60px;
+        width: calc(100% - 60px);
+    }
+}
+
+@media (max-width: 880px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .topbar {
+        grid-template-columns: 1fr 5fr 0.4fr 1fr;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .search {
+        width: 80%;
+    }
+
+    .search input {
+        padding: 0 20px;
+    }
+
+    .user {
+        width: 40px;
+        height: 40px;
+    }
+}

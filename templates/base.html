@@ -10,30 +10,33 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
      <!-- cnd font-awesome css-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet" type='text/css'>
+
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    
     
     <link rel="stylesheet" href="{% static 'sigweb/lib/leaflet-ruler-master/src/leaflet-ruler.css' %}">
     <link rel="stylesheet" href="{% static 'sigweb/lib/Leaflet.EasyButton-master/src/easy-button.css' %}">
     <link rel="stylesheet" href="{% static 'sigweb/lib/leaflet.fullscreen-master/Control.FullScreen.css' %}">
     <link rel="stylesheet" href="{% static 'sigweb/lib/Leaflet.Pancontrol-master/src/L.Control.Pan.css' %}">
     
-    <link rel="stylesheet" href="{% static 'sigweb/css/map_styles.css' %}">
-    
+    {% comment %} <link rel="stylesheet" href="{% static 'sigweb/css/map_styles.css' %}"> {% endcomment %}
     <style>
         #login{
             color: white;
-            background-color: #370f0f;
+            background-color:rgb(49, 43, 43);
             border-color: #007bff;
             padding: 5px 10px;
             border-radius: 5px;
-            margin-right: 10px;
+            margin-right: 10px; 
             text-decoration: none;
         }
         #navbar{
            
-            background-color: #c1282a !important;
+            background-color:rgb(82, 22, 16)!important;
             opacity: 0.9;
         }
+       
         
     </style>
 
@@ -48,7 +51,7 @@
     <nav id="navbar" class="navbar navbar-expand-lg bg-primary navbar-dark custom-nvabar">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="{% static '/image/logo.png' %}" alt="GLOBETUDES">
+                <img  style="height:30px; width:45px; background-color:white;border-radius:45px;" src="{% static 'sigweb/image/logo.png' %}" alt="GLOBETUDES">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" 
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +60,7 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="dashboard.html">TABLEAU DU BORD</a>
+                        <a class="nav-link active" aria-current="page" href="{% url 'sigweb:dashboard'%}">TABLEAU DU BORD</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{% url 'sigweb:liste_parcelles' %}">DOSSIERS</a>
@@ -67,9 +70,10 @@
                     </li>
                 </ul>
                 <div class="d-flex align-items-center">
-                    <a id="login" href="/signup.html" class="me-3">Login|Sigup</a>
                     <img src="{{ user.profile.photo.url }}" alt="User" oncontextmenu="return false;" 
                         style="pointer-events: none; width: 40px; height: 40px; border-radius: 50%;">
+                    <div><span style="color:white;">Welcome, <strong>{{ user.username }}</strong></span></div>
+                    <br><a id="login" href="/signup.html" class="me-3">Login</a>
                 </div>
             </div>
         </div>
@@ -84,6 +88,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
      <script  src="{% static 'sigweb/lib/leaflet-ruler-master/src/leaflet-ruler.js' %}"></script>
 
      <script  src="{% static 'sigweb/lib/Leaflet.EasyButton-master/src/easy-button.js' %}" ></script>
@@ -92,6 +97,6 @@
      <script  src="{% static 'sigweb/javaScript/main.js' %}" ></script>
 
     
-  
+    
 </body>
 </html>

@@ -39,9 +39,18 @@
         box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
         margin: 2rem;
     }
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-    th { background: #f2f2f2; }
+    table {
+         width: 100%;
+          border-collapse: collapse; 
+          margin-top: 10px; }
+    th, td { 
+        border: 1px solid #ddd !important;
+         padding: 8px;
+          text-align: left;
+         }
+    th { 
+        background: #f2f2f2; 
+    } 
     
     /* Modal Styles */
     .modal {
@@ -123,7 +132,88 @@
     </div>
 </div>
 
+
+<div class="table-container">
+    <h2>Fichiers Associés</h2>
+    <p>Plan en DWG: <a href="{{ parcelle.fchier_dwg }}" target="_blank">Télécharger</a> | <a href="#"    class="open-modal" data-url="{% url 'sigweb:modifier_fichier' parcelle.id %}">Importer</a></p>
+
+
+
+    <p>Plan en PDF: 
+        <a href="{{ parcelle.fchier_pdf }}" target="_blank">Télécharger</a> | 
+        <a href="#" class="open-modal1" data-url="{% url 'sigweb:modifier_fichier_pdf' parcelle.id %}">Importer</a>
+    </p>
+    
+</div>
+
+
+<!-- Modal for dwg-->
+<div class="modal fade" id="fileModal" tabindex="-1" aria-labelledby="fileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fileModalLabel">Modifier / Ajouter un Propriétaire</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- The form will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- dwg jquery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    $(document).ready(function(){
+        $(".open-modal").click(function(e){
+            e.preventDefault();
+            var url = $(this).data("url");
+
+            // Load the form inside the modal body
+            $("#fileModal .modal-body").load(url, function(){
+                $("#fileModal").modal("show");
+            });
+        });
+    });
+</script>
+
+
+<!-- Modal for PDF Upload -->
+<div class="modal fade" id="fileModal1" tabindex="-1" aria-labelledby="fileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fileModalLabel">Modifier / Ajouter un Propriétaire</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">  <!-- Ensure this is "modal-body" -->
+                <!-- The form will be dynamically loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- pdf jquery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $(".open-modal1").click(function(e){
+            e.preventDefault();
+            var url = $(this).data("url");
+
+            // Load the form inside the modal body and then open the modal
+            $("#fileModal1 .modal-body").load(url, function(){
+                $("#fileModal1").modal("show");
+            });
+        });
+    });
+</script>
+
+
+<script>
+  
     var modal = document.getElementById("myModal");
     var btn = document.getElementById("openModal");
     var span = document.getElementsByClassName("close")[0];

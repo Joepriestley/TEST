@@ -9,7 +9,7 @@ from django.http import FileResponse, JsonResponse, Http404
 
 from django.conf import settings
 import os
-from .forms import ProprietaireForm, ParcelleForm
+from .forms import ProprietaireForm, ParcelleForm,ParcellePDFForm
 from django.template.loader import render_to_string
 
 
@@ -31,6 +31,9 @@ def index(request):
 
 def liste_parcelle(request):
     return render(request, 'sigweb/liste_parcelle.html')
+
+def dashboard(request):
+    return render(request, 'sigweb/dashboard.html')
 
 
 
@@ -104,7 +107,6 @@ def modifier_proprietaire(request, parcelle_id):
     return render(request, 'sigweb/modifier_proprietaire.html', {'form': form, 'parcelle': parcelle})
     
 
-
 def modifier_des_fichier_DWG(request, parcelle_id):
     parcelle = get_object_or_404(Parcelle, id=parcelle_id)
 
@@ -118,6 +120,21 @@ def modifier_des_fichier_DWG(request, parcelle_id):
         form = ParcelleForm(instance=parcelle)
 
     return render(request, 'sigweb/modifier_fichier_dwg.html', {'form': form, 'parcelle': parcelle})
+
+
+
+def modifier_des_fichier_PDF(request,parcelle_id):
+    parcelle = get_object_or_404(Parcelle, id=parcelle_id)
+    if request.method == "POST":
+        form = ParcellePDFForm(request.POST, request.FILES, instance=parcelle)
+        if form.is_valid():
+            parcelle = form.save(commit=False)
+            parcelle.save()
+            return redirect('sigweb:details_parcelle', parcelle_id=parcelle.id)
+    else:
+        form = ParcellePDFForm(instance=parcelle)
+    return render(request, 'sigweb/modifier_fichier_pdf.html', {'form': form, 'parcelle': parcelle})
+    
 
 
 

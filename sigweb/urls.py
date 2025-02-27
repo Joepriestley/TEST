@@ -26,7 +26,11 @@ urlpatterns=[
     #formulaire de modification
     #path('parcelle/<int:parcelle_id>/modifier_proprietaire/', views.modifier_proprietaire, name='modifier_proprietaire'),
     path('parcelle/<int:parcelle_id>/modifier_fichier_dwg/', views.modifier_des_fichier_DWG, name='modifier_fichier'),
+    
+    path('parcelle/<int:parcelle_id>/modifier_fichier_pdf/', views.modifier_des_fichier_PDF, name='modifier_fichier_pdf'),
+    
     path('modifier-proprietaire/<int:parcelle_id>/', views.modifier_proprietaire, name="modifier_proprietaire"),
+    path('dashboard/', views.dashboard, name="dashboard"),
 
      ]
 
